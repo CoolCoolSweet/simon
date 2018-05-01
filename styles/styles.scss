@@ -21,6 +21,10 @@ body {
     height: 100px;
 }
 
+.game-button:active {
+    background: #fff;
+}
+
 .game-button0 {
     background: yellow;
 }
@@ -40,4 +44,5 @@ body {
 .start-button {
     background: white;
     width: 100%;
+    margin-top: 5%;
 }
