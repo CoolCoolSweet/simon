@@ -1,13 +1,20 @@
 @import "partials/setup";
 @import "partials/typography";
 
+// VARIABLE THINGS
+
+$wrapperWidth: 1100px;
+
+
+// STYLING
+
 body {
     background: mediumslateblue;
 }
 
 .wrapper {
-    max-width: 1100px;
-    height: 100vh;
+    max-width: $wrapperWidth;
+    // height: 100vh;
     margin: 0 auto;
     display: flex;
     justify-content: space-between;
@@ -17,8 +24,14 @@ body {
 }
 
 .game-button {
-    width: 20%;
-    height: 100px;
+    width: calc(50vw - (100vw - 100%));
+    height: 50vw;
+    border-radius: 50%;
+
+    @media (min-width: $wrapperWidth) {
+        width: calc(#{$wrapperWidth} * 0.5); /* I had to "interpolate" the variable to make it work, some sass thing.  */
+        height: calc(#{$wrapperWidth} * 0.5);
+    }
 }
 
 .game-button:active {
@@ -27,18 +40,24 @@ body {
 
 .game-button0 {
     background: yellow;
+    border-radius: 100% 0 0 0;
+    border-top: 2px solid black;
+    border-left: 2px solid black;
 }
 
 .game-button1 {
     background: green;
+    border-radius: 0 100% 0 0 ;
 }
 
 .game-button2 {
     background: red;
+    border-radius: 0 0 0 100%;
 }
 
 .game-button3 {
     background: blue;
+    border-radius: 0 0 100% 0;
 }
 
 .start-button {

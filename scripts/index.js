@@ -40,17 +40,18 @@ $(function () {
     // FUNCTIONS
 
     // Main game flow
-    const gameLogic = (guessColor) => {    
-        if (guessColor === solutionArray[guessIndex]) {
-            randomSelector = colorList[randNum(0, 3)];
+    const gameLogic = (guessColor) => {  
+        if (guessColor === solutionArray[guessIndex].color) {
+            randomSelector = randNum(0, 3);
             pushNewColor(randomSelector);
             guessIndex++;
+            console.log(solutionArray[guessIndex].color);
         } else {
             alert('loser');
+            flashSequence();
         }
         
-        console.log(guessColor, guessIndex);
-        console.log(solutionArray);
+    
         
     };
 
@@ -66,8 +67,17 @@ $(function () {
 
     // Flash the solution sequence
     const flashSequence = () => {
-        
+        for (let i = 0; i < solutionArray.length; i++) {
+            setTimeout(() => {
+                $(solutionArray[i].className).css("background-color", "black");
+                setTimeout(() => {
+                    $(solutionArray[i].className).css("background-color", solutionArray[i].color);
+                }, 500);
+            }, 1000 * i);
+            
+        }
     }
+    
     // BUILT UP STUFF
 
     // Building up the gameButtons array here with objects in the array and attaching click event listeners to each htmlElement.
@@ -75,6 +85,7 @@ $(function () {
         gameButtons[i] = {
             color: colorList[i],
             htmlElement: gameButtonsHtmlElements[i],
+            className: `.game-button${i}`,
         }
 
         $(gameButtons[i].htmlElement).on('click', () =>  {
@@ -85,6 +96,6 @@ $(function () {
     
     randomSelector = randNum(0, 3);
     pushNewColor(randomSelector);
-    console.log(solutionArray);
+    console.log(solutionArray[guessIndex].color);
     
 });
