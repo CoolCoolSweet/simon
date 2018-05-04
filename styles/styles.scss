@@ -3,7 +3,7 @@
 
 // VARIABLE THINGS
 
-$wrapperWidth: 1100px;
+$wrapperWidth: 500px;
 
 
 // STYLING
@@ -14,35 +14,36 @@ body {
 
 .wrapper {
     max-width: $wrapperWidth;
-    // height: 100vh;
+    height: 100vh;
     margin: 0 auto;
     display: flex;
-    justify-content: space-between;
+    justify-content: center;
     align-items: center;
     align-content: center;
     flex-wrap: wrap;
 }
 
 .game-button {
-    width: calc(50vw - (100vw - 100%));
-    height: 50vw;
+	width: 200px;
+	height: 200px;
     border-radius: 50%;
 
-    @media (min-width: $wrapperWidth) {
-        width: calc(#{$wrapperWidth} * 0.5); /* I had to "interpolate" the variable to make it work, some sass thing.  */
-        height: calc(#{$wrapperWidth} * 0.5);
-    }
+    // @media (min-width: $wrapperWidth) {
+    //     width: calc(#{$wrapperWidth} * 0.5); /* I had to "interpolate" the variable to make it work, some sass thing.  */
+    //     height: calc(#{$wrapperWidth} * 0.5);
+    // }
 }
 
 .game-button:active {
     background: #fff;
 }
 
+
 .game-button0 {
     background: yellow;
     border-radius: 100% 0 0 0;
-    border-top: 2px solid black;
-    border-left: 2px solid black;
+    // border-top: 5px solid black;
+    // border-left: 5px solid black;
 }
 
 .game-button1 {
@@ -58,6 +59,11 @@ body {
 .game-button3 {
     background: blue;
     border-radius: 0 0 100% 0;
+}
+
+.flash {
+	border: 5px solid black;
+	background: white;
 }
 
 .start-button {

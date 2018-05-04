@@ -31,27 +31,29 @@ $(function () {
 
     // VARIABLES
     const gameButtonsHtmlElements = $(".game-button").toArray();
+    const startButton = $(".start-button");
     const colorList = ["yellow", "green", "red", "blue"];
     const gameButtons = [];
     const solutionArray = [];
     let guessIndex = 0;
-    let randomSelector = 0;
+	let randomSelector = 0;
     
     // FUNCTIONS
 
     // Main game flow
     const gameLogic = (guessColor) => {  
-        if (guessColor === solutionArray[guessIndex].color) {
-            randomSelector = randNum(0, 3);
-            pushNewColor(randomSelector);
-            guessIndex++;
-            console.log(solutionArray[guessIndex].color);
+		if (guessColor === solutionArray[guessIndex].color) {
+			guessIndex++;	
         } else {
             alert('loser');
-            flashSequence();
-        }
-        
-    
+		};
+
+		if (guessIndex == solutionArray.length) {
+			randomSelector = randNum(0, 3);
+			pushNewColor(randomSelector);
+			flashSequence(1000);
+			guessIndex = 0;
+		}
         
     };
 
@@ -60,42 +62,48 @@ $(function () {
         return Math.floor(Math.random() * (max - min + 1)) + min
     };
 
-    // Pushes a new color to the solutionArray
-    const pushNewColor = (color) => {
-        solutionArray.push(gameButtons[color]);
+    // Pushes a new object to the solutionArray
+    const pushNewColor = (number) => {
+        solutionArray.push(gameButtons[number]);
     };
 
     // Flash the solution sequence
-    const flashSequence = () => {
+    const flashSequence = (flashDelay) => {
         for (let i = 0; i < solutionArray.length; i++) {
             setTimeout(() => {
-                $(solutionArray[i].className).css("background-color", "black");
+				$(solutionArray[i].className).toggleClass("flash");
+				$(solutionArray[i].sound)[0].play();
                 setTimeout(() => {
-                    $(solutionArray[i].className).css("background-color", solutionArray[i].color);
-                }, 500);
-            }, 1000 * i);
-            
-        }
-    }
+					$(solutionArray[i].className).toggleClass("flash");
+                }, 300);
+            }, ((600 * i) + flashDelay));
+		};
+    };
     
     // BUILT UP STUFF
 
     // Building up the gameButtons array here with objects in the array and attaching click event listeners to each htmlElement.
     gameButtonsHtmlElements.forEach((element, i) => {
         gameButtons[i] = {
-            color: colorList[i],
+        	color: colorList[i],
             htmlElement: gameButtonsHtmlElements[i],
-            className: `.game-button${i}`,
+			className: `.game-button${i}`,
+			sound: `#${colorList[i]}-sound`
         }
 
-        $(gameButtons[i].htmlElement).on('click', () =>  {
+        $(gameButtons[i].htmlElement).on('mouseup', () =>  {
+			$(gameButtons[i].sound)[0].play();
             gameLogic(gameButtons[i].color);
         });
     
     });
-    
-    randomSelector = randNum(0, 3);
-    pushNewColor(randomSelector);
-    console.log(solutionArray[guessIndex].color);
+
+    startButton.on('click', () => {
+		guessIndex = 0;
+		solutionArray.length = 0;
+        randomSelector = randNum(0, 3);
+        pushNewColor(randomSelector);
+        flashSequence(0);
+	});
     
 });
