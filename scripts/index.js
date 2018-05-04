@@ -27,7 +27,8 @@
 
 // });
 
-$(function () {
+// $(function () {
+$(window).on('load', function (e) { 
 
     // VARIABLES
     const gameButtonsHtmlElements = $(".game-button").toArray();
