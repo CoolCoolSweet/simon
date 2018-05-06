@@ -35,7 +35,7 @@ $(window).on('load', function (e) {
     const startButton = $(".start-button");
     const colorList = ["yellow", "green", "red", "blue"];
     const gameButtons = [];
-    const solutionArray = [];
+    let solutionArray = [];
     let guessIndex = 0;
 	let randomSelector = 0;
     
@@ -50,6 +50,7 @@ $(window).on('load', function (e) {
 		};
 
 		if (guessIndex == solutionArray.length) {
+			toggleButtonsWorking();
 			randomSelector = randNum(0, 3);
 			pushNewColor(randomSelector);
 			flashSequence(1000);
@@ -70,6 +71,11 @@ $(window).on('load', function (e) {
 
     // Flash the solution sequence
     const flashSequence = (flashDelay) => {
+
+		setTimeout(() => {
+			toggleButtonsWorking();
+		}, ((600 * solutionArray.length) + flashDelay));
+
         for (let i = 0; i < solutionArray.length; i++) {
             setTimeout(() => {
 				$(solutionArray[i].className).toggleClass("flash");
@@ -79,7 +85,14 @@ $(window).on('load', function (e) {
                 }, 300);
             }, ((600 * i) + flashDelay));
 		};
-    };
+	};
+	
+	const toggleButtonsWorking = () => {
+		for (let i = 0; i < gameButtons.length; i++) {
+			$(`.game-button${i}`).toggleClass("disabled-button");
+		};
+		$(`html`).toggleClass("cursor-thing");
+	};
     
     // BUILT UP STUFF
 
@@ -92,16 +105,19 @@ $(window).on('load', function (e) {
 			sound: `#${colorList[i]}-sound`
         }
 
-        $(gameButtons[i].htmlElement).on('mouseup', () =>  {
+		$(gameButtons[i].htmlElement).on('click', () =>  {
+			$(gameButtons[i].sound)[0].pause();
+			$(gameButtons[i].sound)[0].currentTime = 0;
 			$(gameButtons[i].sound)[0].play();
             gameLogic(gameButtons[i].color);
         });
     
     });
 
-    startButton.on('click', () => {
+	startButton.on('click', () => {
+		toggleButtonsWorking();
 		guessIndex = 0;
-		solutionArray.length = 0;
+		solutionArray = [];
         randomSelector = randNum(0, 3);
         pushNewColor(randomSelector);
         flashSequence(0);

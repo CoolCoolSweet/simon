@@ -9,24 +9,48 @@ $wrapperWidth: 500px;
 // STYLING
 
 body {
-    background: mediumslateblue;
+    background: #000;
 }
 
 .wrapper {
     max-width: $wrapperWidth;
     height: 100vh;
-    margin: 0 auto;
-    display: flex;
+	margin: 0 auto;
+	display: flex;
     justify-content: center;
     align-items: center;
     align-content: center;
     flex-wrap: wrap;
+    
+}
+
+.container {
+	width: 50vmin;
+	height: 50vmin;
+	display: flex;
+    justify-content: space-between;
+    // align-items: center;
+    align-content: space-between;
+	flex-wrap: wrap;
+	position: relative;
+}
+
+.number {
+	position: absolute;
+	color: #fff;
+	top: 50%;
+	left: 50%;
+	margin: 0;
+	padding: 0;
+	transform: translate(-50%, -50%);
+	font-size: 5rem;
 }
 
 .game-button {
-	width: 200px;
-	height: 200px;
-    border-radius: 50%;
+	width: 45%;
+	height: 45%;
+	border-radius: 50%;
+	position: relative;
 
     // @media (min-width: $wrapperWidth) {
     //     width: calc(#{$wrapperWidth} * 0.5); /* I had to "interpolate" the variable to make it work, some sass thing.  */
@@ -35,39 +59,79 @@ body {
 }
 
 .game-button:active {
-    background: #fff;
+    opacity: 0.5;
 }
-
 
 .game-button0 {
     background: yellow;
     border-radius: 100% 0 0 0;
-    // border-top: 5px solid black;
-    // border-left: 5px solid black;
+	.inner-piece {
+		position: absolute;
+		height: 50%;
+		width: 50%;
+		background: #000;
+		bottom: 0;
+		right: 0;
+		border-radius: 100% 0 0 0;
+	}
 }
 
 .game-button1 {
     background: green;
-    border-radius: 0 100% 0 0 ;
+	border-radius: 0 100% 0 0 ;
+	.inner-piece {
+		position: absolute;
+		height: 50%;
+		width: 50%;
+		background: #000;
+		bottom: 0;
+		left: 0;
+		border-radius: 0 100% 0 0 ;
+	}
 }
 
 .game-button2 {
     background: red;
-    border-radius: 0 0 0 100%;
+	border-radius: 0 0 0 100%;
+	.inner-piece {
+		position: absolute;
+		height: 50%;
+		width: 50%;
+		background: #000;
+		top: 0;
+		right: 0;
+		border-radius: 0 0 0 100%;
+	}
 }
 
 .game-button3 {
     background: blue;
-    border-radius: 0 0 100% 0;
+	border-radius: 0 0 100% 0;
+	.inner-piece {
+		position: absolute;
+		height: 50%;
+		width: 50%;
+		background: #000;
+		top: 0;
+		left: 0;
+		border-radius: 0 0 100% 0;
+	}
 }
 
 .flash {
-	border: 5px solid black;
-	background: white;
+	opacity: 0.5;
 }
 
 .start-button {
     background: white;
     width: 100%;
     margin-top: 5%;
+}
+
+.disabled-button {
+	pointer-events: none;
+}
+
+.cursor-thing:active {
+	cursor: no-drop;
 }
