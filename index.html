@@ -19,9 +19,18 @@
 			<div class="game-button game-button1"></div>
 			<div class="game-button game-button2"></div>
 			<div class="game-button game-button3"></div>
-			<p class="number">8</p>
+			<div class="level-container">
+				<p class="level">Score</p>
+				<p class="number">0</p>
+			</div>
 		</div>
-		<button class="start-button"><h1>START THE GAME</h1></button> 
+		<button class="start-button">New Game</button>
+		<div class="slidecontainer">
+			<h2 class="slider-label">Playback Speed</h2>
+			<input type="range" min="25" max="100" value="100" class="slider" id="myRange">
+			<p>Normal</p>
+			<p>Fastest</p>
+		</div>
     </div>
 <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
 <script src="scripts/index.js"></script>

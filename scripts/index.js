@@ -37,7 +37,8 @@ $(window).on('load', function (e) {
     const gameButtons = [];
     let solutionArray = [];
     let guessIndex = 0;
-	let randomSelector = 0;
+    let randomSelector = 0;
+    const slider = document.getElementById("myRange");
     
     // FUNCTIONS
 
@@ -69,28 +70,43 @@ $(window).on('load', function (e) {
         solutionArray.push(gameButtons[number]);
     };
 
+    // Change score text
+    const setScore = () => {
+        $(".level").text("Score");
+        $(".number").css("font-size", "5rem");
+        $(".number").text(solutionArray.length - 1);
+    }
+
     // Flash the solution sequence
     const flashSequence = (flashDelay) => {
 
+        $(".level").text("Please");
+        $(".number").css("font-size", "2rem");
+        $(".number").text("Wait...");
+
 		setTimeout(() => {
-			toggleButtonsWorking();
-		}, ((600 * solutionArray.length) + flashDelay));
+            toggleButtonsWorking();
+            setScore();
+        }, ((600 * solutionArray.length) + flashDelay) * (slider.value / 100));
 
         for (let i = 0; i < solutionArray.length; i++) {
             setTimeout(() => {
-				$(solutionArray[i].className).toggleClass("flash");
+                $(solutionArray[i].className).toggleClass("flash");
+                $(solutionArray[i].sound)[0].pause();
+                $(solutionArray[i].sound)[0].currentTime = 0;
 				$(solutionArray[i].sound)[0].play();
                 setTimeout(() => {
 					$(solutionArray[i].className).toggleClass("flash");
-                }, 300);
-            }, ((600 * i) + flashDelay));
+                }, 300 * (slider.value / 100));
+            }, ((600 * i) + flashDelay) * (slider.value / 100));
 		};
 	};
 	
 	const toggleButtonsWorking = () => {
 		for (let i = 0; i < gameButtons.length; i++) {
 			$(`.game-button${i}`).toggleClass("disabled-button");
-		};
+        };
+        $(`.start-button`).toggleClass("disabled-button");
 		$(`html`).toggleClass("cursor-thing");
 	};
     
@@ -121,6 +137,8 @@ $(window).on('load', function (e) {
         randomSelector = randNum(0, 3);
         pushNewColor(randomSelector);
         flashSequence(0);
-	});
+    });
     
+    // SLIDER STUFF
+
 });
