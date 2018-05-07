@@ -219,3 +219,22 @@ body {
 		margin-left: 20px;
 	}
 }
+
+.tweet {
+	margin-top: 10px;
+	background: #1DA1F2;
+	border-radius: 10px;
+	padding: 10px 15px;
+	text-decoration: none;
+	color: #fff;
+	font-weight: 600;
+}
+
+.tweet:hover {
+	box-shadow: 0 0 5px #1DA1F2;
+	opacity: 0.9;
+}
+
+.tweet:active {
+	opacity: 0.5;
+}

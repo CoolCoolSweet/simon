@@ -8,6 +8,7 @@ $(window).on('load', function (e) {  /* I am using an "on.load" instead of a doc
     let solutionArray = [];
     let guessIndex = 0;
     let randomSelector = 0;
+    let score = 0;
     const slider = document.getElementById("speed-slider");
     // FUNCTIONS
 
@@ -19,14 +20,12 @@ $(window).on('load', function (e) {  /* I am using an "on.load" instead of a doc
             guessIndex = "loser"; /* Prevent any more gameplay by switching type*/  
             playLoseSound(300);
             displayGameOver();
-        } 
-        
+        } else        
         // check for loser in reverse mode
         if (guessColor !== solutionArray[solutionArray.length - guessIndex - 1].color && document.getElementById("reverse-mode").checked === true) {
             guessIndex = "loser"; /* Prevent any more gameplay by switching type*/  
             playLoseSound(300);
-            displayGameOver();
-
+            displayGameOver();            
         }
         
         // no losers around these parts
@@ -54,16 +53,19 @@ $(window).on('load', function (e) {  /* I am using an "on.load" instead of a doc
 
     // Change score text
     const setScore = () => {
+        score = solutionArray.length - 1
         $(".level").text("Score");
-        $(".number").css("font-size", "5rem");
+        $(".number").css("font-size", "50px");
         $(".number").text(solutionArray.length - 1);
+        $(".tweet").remove();
+        $(".wrapper").append(`<a class="tweet" href="http://twitter.com/home?status=I got to ${score}! Think you can do better? Try @ http://seanmcneil.tech/simon %23HackerYou %23cohort18" target="_blank" ><i class="fab fa-twitter"></i> Tweet your score!</a>`);
     }
 
     // Flash the solution sequence
     const flashSequence = (flashDelay) => {
 
         $(".level").text("Please");
-        $(".number").css("font-size", "2rem");
+        $(".number").css("font-size", "20px");
         $(".number").text("Wait...");
 
 		setTimeout(() => {
@@ -104,10 +106,11 @@ $(window).on('load', function (e) {  /* I am using an "on.load" instead of a doc
     };
 
     const displayGameOver = () => {
-        $(".level").css("font-size", "2rem");
-        $(".number").css("font-size", "2rem");
+        $(".level").css("font-size", "20px");
+        $(".number").css("font-size", "20px");
         $(".level").text('Game Over');
         $(".number").text(`Score: ${solutionArray.length - 1}`);
+        $(".twitter-share-button").attr("data-text", `I just scored ${solutionArray.length - 1}!`);
     };
 
     // BUILT UP STUFF
@@ -138,5 +141,5 @@ $(window).on('load', function (e) {  /* I am using an "on.load" instead of a doc
         pushNewColor(randomSelector);
         flashSequence(0);
     });
-    
+
 });
