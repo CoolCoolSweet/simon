@@ -8,6 +8,7 @@
     <title>Document</title>
 </head>
 <body>
+	<audio id="lose" src="sounds/wavTones.com.unregistred.sqr_42Hz_-6dBFS_1.5s.wav" type="audio/wav"></audio>
 	<audio id="yellow-sound" src="sounds/wavTones.com.unregistred.sqr_209Hz_-6dBFS_0.3s.wav" type="audio/wav"></audio>
 	<audio id="green-sound" src="sounds/wavTones.com.unregistred.sqr_252Hz_-6dBFS_0.3s.wav" type="audio/wav"></audio>
 	<audio id="red-sound" src="sounds/wavTones.com.unregistred.sqr_310Hz_-6dBFS_0.3s.wav" type="audio/wav"></audio>
@@ -25,12 +26,13 @@
 			</div>
 		</div>
 		<button class="start-button">New Game</button>
+		<h2 class="slider-label">Playback Speed</h2>
 		<div class="slidecontainer">
-			<h2 class="slider-label">Playback Speed</h2>
-			<input type="range" min="25" max="100" value="100" class="slider" id="myRange">
+			<input type="range" min="25" max="100" value="100" class="slider" id="speed-slider">
 			<p>Normal</p>
 			<p>Fastest</p>
 		</div>
+		<input type="checkbox" id="reverse-mode">
     </div>
 <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
 <script src="scripts/index.js"></script>

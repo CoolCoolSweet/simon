@@ -1,54 +1,26 @@
-// $(function () {
-    
-//     // VARIABLES
-//     const gameButtonsReturnedArray = document.getElementsByClassName('game-button');
-//     const colorList = ["yellow", "green", "red", "blue"];
-//     const gameButtons = [];
-//     const solutionArray = [];
-
-//     // FUNCTIONS
-//     const clickEvent = (buttonNum) => {
-//         alert(this.color);
-//         console.log(colorList[Math.floor((Math.random() * colorList.length))]);
-//         console.log(gameButtons[buttonNum].color);
-//     };
-
-//     // SETUP kinda thing (There is probably a better name)
-
-//     // I'm using a for loop, instead of foreach() method because the array returned is not a real array. It is some NodeList object thing.
-//     for (let i = 0; i < gameButtonsReturnedArray.length; i++) { 
-//         gameButtons[i] = {
-//             htmlElement: gameButtonsReturnedArray[i],
-//             color: colorList[i],
-//         };
-//         gameButtons[i].htmlElement.addEventListener("click", () => { clickEvent(i); }, false);
-//     };
-    
-
-// });
-
-// $(function () {
-$(window).on('load', function (e) { 
+$(window).on('load', function (e) {  /* I am using and "on.load" instead of a document ready because I had issues where my sounds wouldnt load in time on fast computers. I read that this can solve the problem because an "on.load" waits for all the assets (sounds) to be loaded too as opposed to just dom elements? in any case this solved my problem. */
 
     // VARIABLES
     const gameButtonsHtmlElements = $(".game-button").toArray();
-    const startButton = $(".start-button");
     const colorList = ["yellow", "green", "red", "blue"];
     const gameButtons = [];
     let solutionArray = [];
     let guessIndex = 0;
     let randomSelector = 0;
-    const slider = document.getElementById("myRange");
+    const slider = document.getElementById("speed-slider");
+   
     
     // FUNCTIONS
 
     // Main game flow
-    const gameLogic = (guessColor) => {  
-		if (guessColor === solutionArray[guessIndex].color) {
-			guessIndex++;	
-        } else {
-            alert('loser');
-		};
+    const gameLogic = (guessColor) => {
+        	 
+		if (guessColor !== solutionArray[guessIndex].color) {
+            guessIndex = "loser"; /* Prevent any more gameplay by switching type*/
+            
+        };
+        
+        guessIndex++;
 
 		if (guessIndex == solutionArray.length) {
 			toggleButtonsWorking();
@@ -107,6 +79,7 @@ $(window).on('load', function (e) {
 			$(`.game-button${i}`).toggleClass("disabled-button");
         };
         $(`.start-button`).toggleClass("disabled-button");
+        $(`#reverse-mode`).toggleClass("disabled-button"); 
 		$(`html`).toggleClass("cursor-thing");
 	};
     
@@ -130,8 +103,8 @@ $(window).on('load', function (e) {
     
     });
 
-	startButton.on('click', () => {
-		toggleButtonsWorking();
+    $(".start-button").on('click', () => {
+        toggleButtonsWorking();
 		guessIndex = 0;
 		solutionArray = [];
         randomSelector = randNum(0, 3);
@@ -139,6 +112,4 @@ $(window).on('load', function (e) {
         flashSequence(0);
     });
     
-    // SLIDER STUFF
-
 });
