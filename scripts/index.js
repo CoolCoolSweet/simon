@@ -1,25 +1,35 @@
-$(window).on('load', function (e) {  /* I am using and "on.load" instead of a document ready because I had issues where my sounds wouldnt load in time on fast computers. I read that this can solve the problem because an "on.load" waits for all the assets (sounds) to be loaded too as opposed to just dom elements? in any case this solved my problem. */
+$(window).on('load', function (e) {  /* I am using an "on.load" instead of a document ready because I had issues where my sounds wouldnt load in time on fast computers. I read that this can solve the problem because an "on.load" waits for all the assets (sounds) to be loaded too as opposed to just dom elements? in any case this solved my problem. */
 
     // VARIABLES
     const gameButtonsHtmlElements = $(".game-button").toArray();
+    const loseSound = document.getElementById("lose");
     const colorList = ["yellow", "green", "red", "blue"];
     const gameButtons = [];
     let solutionArray = [];
     let guessIndex = 0;
     let randomSelector = 0;
     const slider = document.getElementById("speed-slider");
-   
-    
     // FUNCTIONS
 
     // Main game flow
     const gameLogic = (guessColor) => {
-        	 
-		if (guessColor !== solutionArray[guessIndex].color) {
-            guessIndex = "loser"; /* Prevent any more gameplay by switching type*/
-            
-        };
         
+        // check for a loser in normal mode
+        if (guessColor !== solutionArray[guessIndex].color && document.getElementById("reverse-mode").checked === false) {
+            guessIndex = "loser"; /* Prevent any more gameplay by switching type*/  
+            playLoseSound(300);
+            displayGameOver();
+        } 
+        
+        // check for loser in reverse mode
+        if (guessColor !== solutionArray[solutionArray.length - guessIndex - 1].color && document.getElementById("reverse-mode").checked === true) {
+            guessIndex = "loser"; /* Prevent any more gameplay by switching type*/  
+            playLoseSound(300);
+            displayGameOver();
+
+        }
+        
+        // no losers around these parts
         guessIndex++;
 
 		if (guessIndex == solutionArray.length) {
@@ -73,7 +83,8 @@ $(window).on('load', function (e) {  /* I am using and "on.load" instead of a do
             }, ((600 * i) + flashDelay) * (slider.value / 100));
 		};
 	};
-	
+    
+    // Toggle the buttons being clickable
 	const toggleButtonsWorking = () => {
 		for (let i = 0; i < gameButtons.length; i++) {
 			$(`.game-button${i}`).toggleClass("disabled-button");
@@ -83,6 +94,22 @@ $(window).on('load', function (e) {  /* I am using and "on.load" instead of a do
 		$(`html`).toggleClass("cursor-thing");
 	};
     
+    // Play the lose sound
+    const playLoseSound = (delay) => {
+        setTimeout(function(){
+            loseSound.pause();
+            loseSound.currentTime = 0;
+            loseSound.play();
+        }, delay);
+    };
+
+    const displayGameOver = () => {
+        $(".level").css("font-size", "2rem");
+        $(".number").css("font-size", "2rem");
+        $(".level").text('Game Over');
+        $(".number").text(`Score: ${solutionArray.length - 1}`);
+    };
+
     // BUILT UP STUFF
 
     // Building up the gameButtons array here with objects in the array and attaching click event listeners to each htmlElement.

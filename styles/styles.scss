@@ -51,6 +51,7 @@ body {
 	justify-content: center;
 	align-items: center;
 	align-content: center;
+	text-align: center;
 }
 
 .game-button {
@@ -113,8 +114,7 @@ body {
 }
 
 .start-button {
-	background: #000;
-	border: none;
+	background: #111;
 	padding: 10px 20px;
 	width: auto;
 	min-width: 35%;
@@ -209,4 +209,13 @@ body {
 
 .slider:active::-moz-range-thumb {
 	opacity:  1;
+}
+
+.reverse-mode-container {
+	display: flex;
+	justify-content: space-between;
+	margin-top: 10px;
+	input {
+		margin-left: 20px;
+	}
 }
